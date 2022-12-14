@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
+	
+	"github.com/gozelle/testify/assert"
 )
 
 type Person struct {
@@ -66,7 +66,7 @@ func TestCarbon_UnmarshalJSON(t *testing.T) {
 		"created_at3": 1596604455999999,
 		"created_at4": 1596604455999999999
 	}`
-
+	
 	err := json.Unmarshal([]byte(str), &person)
 	assert.Nil(t, err)
 	fmt.Printf("Json string parse to person:\n%+v\n", person)

@@ -23,10 +23,10 @@ Carbon 已被 [awesome-go-cn](https://github.com/yinggaozhen/awesome-go-cn#日�
 
 ```go
 // 使用 github 库
-go get -u github.com/golang-module/carbon/v2
+go get -u github.com/gozelle/carbon
 
 import (
-	"github.com/golang-module/carbon/v2"
+	"github.com/gozelle/carbon"
 )
 
 // 使用 gitee 库

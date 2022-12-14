@@ -23,10 +23,10 @@ Carbon は [awesome-go](https://github.com/avelino/awesome-go#date-and-time "awe
 
 ```go
 // github倉庫を使う
-go get -u github.com/golang-module/carbon/v2
+go get -u github.com/gozelle/carbon
 
 import (
-	"github.com/golang-module/carbon/v2"
+	"github.com/gozelle/carbon"
 )
 
 // gitee倉庫を使う

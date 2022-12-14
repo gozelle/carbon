@@ -3,13 +3,13 @@ package carbon
 import (
 	"strconv"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
+	
+	"github.com/gozelle/testify/assert"
 )
 
 func TestCarbon_IsZero(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -19,10 +19,10 @@ func TestCarbon_IsZero(t *testing.T) {
 		{"0000-00-00", true},
 		{"00:00:00", true},
 		{"0000-00-00 00:00:00", true},
-
+		
 		{"2020-08-05", false},
 	}
-
+	
 	for index, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
@@ -32,7 +32,7 @@ func TestCarbon_IsZero(t *testing.T) {
 
 func TestCarbon_IsValid(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -42,10 +42,10 @@ func TestCarbon_IsValid(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-08-05", true},
 	}
-
+	
 	for index, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
@@ -55,7 +55,7 @@ func TestCarbon_IsValid(t *testing.T) {
 
 func TestCarbon_IsInvalid(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -65,10 +65,10 @@ func TestCarbon_IsInvalid(t *testing.T) {
 		{"0000-00-00", true},
 		{"00:00:00", true},
 		{"0000-00-00 00:00:00", true},
-
+		
 		{"2020-08-05", false},
 	}
-
+	
 	for index, test := range tests {
 		c := Parse(test.input)
 		assert.Nil(c.Error)
@@ -78,7 +78,7 @@ func TestCarbon_IsInvalid(t *testing.T) {
 
 func TestCarbon_IsNow(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -88,12 +88,12 @@ func TestCarbon_IsNow(t *testing.T) {
 		{Parse("0000-00-00"), false},
 		{Parse("00:00:00"), false},
 		{Parse("0000-00-00 00:00:00"), false},
-
+		
 		{Tomorrow(), false},
 		{Now(), true},
 		{Yesterday(), false},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -103,7 +103,7 @@ func TestCarbon_IsNow(t *testing.T) {
 
 func TestCarbon_IsFuture(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -113,12 +113,12 @@ func TestCarbon_IsFuture(t *testing.T) {
 		{Parse("0000-00-00"), false},
 		{Parse("00:00:00"), false},
 		{Parse("0000-00-00 00:00:00"), false},
-
+		
 		{Tomorrow(), true},
 		{Now(), false},
 		{Yesterday(), false},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -128,7 +128,7 @@ func TestCarbon_IsFuture(t *testing.T) {
 
 func TestCarbon_IsPast(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -138,12 +138,12 @@ func TestCarbon_IsPast(t *testing.T) {
 		{Parse("0000-00-00"), false},
 		{Parse("00:00:00"), false},
 		{Parse("0000-00-00 00:00:00"), false},
-
+		
 		{Tomorrow(), false},
 		{Now(), false},
 		{Yesterday(), true},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -153,7 +153,7 @@ func TestCarbon_IsPast(t *testing.T) {
 
 func TestCarbon_IsLeapYear(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -163,7 +163,7 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2015-01-01", false},
 		{"2016-01-01", true},
 		{"2017-01-01", false},
@@ -172,7 +172,7 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 		{"2020-01-01", true},
 		{"2021-01-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -182,7 +182,7 @@ func TestCarbon_IsLeapYear(t *testing.T) {
 
 func TestCarbon_IsLongYear(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -192,7 +192,7 @@ func TestCarbon_IsLongYear(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2015-01-01", true},
 		{"2016-01-01", false},
 		{"2017-01-01", false},
@@ -201,7 +201,7 @@ func TestCarbon_IsLongYear(t *testing.T) {
 		{"2020-01-01", true},
 		{"2021-01-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -211,7 +211,7 @@ func TestCarbon_IsLongYear(t *testing.T) {
 
 func TestCarbon_IsJanuary(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -221,7 +221,7 @@ func TestCarbon_IsJanuary(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", true},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -235,7 +235,7 @@ func TestCarbon_IsJanuary(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -245,7 +245,7 @@ func TestCarbon_IsJanuary(t *testing.T) {
 
 func TestCarbon_IsFebruary(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -255,7 +255,7 @@ func TestCarbon_IsFebruary(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", true},
 		{"2020-03-01", false},
@@ -269,7 +269,7 @@ func TestCarbon_IsFebruary(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -279,7 +279,7 @@ func TestCarbon_IsFebruary(t *testing.T) {
 
 func TestCarbon_IsMarch(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -289,7 +289,7 @@ func TestCarbon_IsMarch(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", true},
@@ -303,7 +303,7 @@ func TestCarbon_IsMarch(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -313,7 +313,7 @@ func TestCarbon_IsMarch(t *testing.T) {
 
 func TestCarbon_IsApril(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -323,7 +323,7 @@ func TestCarbon_IsApril(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -337,7 +337,7 @@ func TestCarbon_IsApril(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -347,7 +347,7 @@ func TestCarbon_IsApril(t *testing.T) {
 
 func TestCarbon_IsMay(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -357,7 +357,7 @@ func TestCarbon_IsMay(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -371,7 +371,7 @@ func TestCarbon_IsMay(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -381,7 +381,7 @@ func TestCarbon_IsMay(t *testing.T) {
 
 func TestCarbon_IsJune(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -391,7 +391,7 @@ func TestCarbon_IsJune(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -405,7 +405,7 @@ func TestCarbon_IsJune(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -415,7 +415,7 @@ func TestCarbon_IsJune(t *testing.T) {
 
 func TestCarbon_IsJuly(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -425,7 +425,7 @@ func TestCarbon_IsJuly(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -439,7 +439,7 @@ func TestCarbon_IsJuly(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -449,7 +449,7 @@ func TestCarbon_IsJuly(t *testing.T) {
 
 func TestCarbon_IsAugust(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -459,7 +459,7 @@ func TestCarbon_IsAugust(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -473,7 +473,7 @@ func TestCarbon_IsAugust(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -483,7 +483,7 @@ func TestCarbon_IsAugust(t *testing.T) {
 
 func TestCarbon_IsSeptember(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -493,7 +493,7 @@ func TestCarbon_IsSeptember(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -507,7 +507,7 @@ func TestCarbon_IsSeptember(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -517,7 +517,7 @@ func TestCarbon_IsSeptember(t *testing.T) {
 
 func TestCarbon_IsOctober(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -527,7 +527,7 @@ func TestCarbon_IsOctober(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -541,7 +541,7 @@ func TestCarbon_IsOctober(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -551,7 +551,7 @@ func TestCarbon_IsOctober(t *testing.T) {
 
 func TestCarbon_IsNovember(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -561,7 +561,7 @@ func TestCarbon_IsNovember(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -575,7 +575,7 @@ func TestCarbon_IsNovember(t *testing.T) {
 		{"2020-11-01", true},
 		{"2020-12-01", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -585,7 +585,7 @@ func TestCarbon_IsNovember(t *testing.T) {
 
 func TestCarbon_IsDecember(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -595,7 +595,7 @@ func TestCarbon_IsDecember(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-01-01", false},
 		{"2020-02-01", false},
 		{"2020-03-01", false},
@@ -609,7 +609,7 @@ func TestCarbon_IsDecember(t *testing.T) {
 		{"2020-11-01", false},
 		{"2020-12-01", true},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -619,7 +619,7 @@ func TestCarbon_IsDecember(t *testing.T) {
 
 func TestCarbon_IsMonday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -629,7 +629,7 @@ func TestCarbon_IsMonday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", true},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -638,7 +638,7 @@ func TestCarbon_IsMonday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -648,7 +648,7 @@ func TestCarbon_IsMonday(t *testing.T) {
 
 func TestCarbon_IsTuesday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -658,7 +658,7 @@ func TestCarbon_IsTuesday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", true},
 		{"2020-10-07", false},
@@ -667,7 +667,7 @@ func TestCarbon_IsTuesday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -677,7 +677,7 @@ func TestCarbon_IsTuesday(t *testing.T) {
 
 func TestCarbon_IsWednesday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -687,7 +687,7 @@ func TestCarbon_IsWednesday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", true},
@@ -696,7 +696,7 @@ func TestCarbon_IsWednesday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -706,7 +706,7 @@ func TestCarbon_IsWednesday(t *testing.T) {
 
 func TestCarbon_IsThursday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -716,7 +716,7 @@ func TestCarbon_IsThursday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -725,7 +725,7 @@ func TestCarbon_IsThursday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -735,7 +735,7 @@ func TestCarbon_IsThursday(t *testing.T) {
 
 func TestCarbon_IsFriday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -745,7 +745,7 @@ func TestCarbon_IsFriday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -754,7 +754,7 @@ func TestCarbon_IsFriday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -764,7 +764,7 @@ func TestCarbon_IsFriday(t *testing.T) {
 
 func TestCarbon_IsSaturday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -774,7 +774,7 @@ func TestCarbon_IsSaturday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -783,7 +783,7 @@ func TestCarbon_IsSaturday(t *testing.T) {
 		{"2020-10-10", true},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -793,7 +793,7 @@ func TestCarbon_IsSaturday(t *testing.T) {
 
 func TestCarbon_IsSunday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -803,7 +803,7 @@ func TestCarbon_IsSunday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -812,7 +812,7 @@ func TestCarbon_IsSunday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", true},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -822,7 +822,7 @@ func TestCarbon_IsSunday(t *testing.T) {
 
 func TestCarbon_IsWeekday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -832,7 +832,7 @@ func TestCarbon_IsWeekday(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", true},
 		{"2020-10-06", true},
 		{"2020-10-07", true},
@@ -841,7 +841,7 @@ func TestCarbon_IsWeekday(t *testing.T) {
 		{"2020-10-10", false},
 		{"2020-10-11", false},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -851,7 +851,7 @@ func TestCarbon_IsWeekday(t *testing.T) {
 
 func TestCarbon_IsWeekend(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		expected bool   // 期望值
@@ -861,7 +861,7 @@ func TestCarbon_IsWeekend(t *testing.T) {
 		{"0000-00-00", false},
 		{"00:00:00", false},
 		{"0000-00-00 00:00:00", false},
-
+		
 		{"2020-10-05", false},
 		{"2020-10-06", false},
 		{"2020-10-07", false},
@@ -870,7 +870,7 @@ func TestCarbon_IsWeekend(t *testing.T) {
 		{"2020-10-10", true},
 		{"2020-10-11", true},
 	}
-
+	
 	for index, test := range tests {
 		c := SetTimezone(PRC).Parse(test.input)
 		assert.Nil(c.Error)
@@ -880,7 +880,7 @@ func TestCarbon_IsWeekend(t *testing.T) {
 
 func TestCarbon_IsYesterday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -890,7 +890,7 @@ func TestCarbon_IsYesterday(t *testing.T) {
 		{Yesterday(), true},
 		{Tomorrow(), false},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -900,7 +900,7 @@ func TestCarbon_IsYesterday(t *testing.T) {
 
 func TestCarbon_IsToday(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -910,7 +910,7 @@ func TestCarbon_IsToday(t *testing.T) {
 		{Yesterday(), false},
 		{Tomorrow(), false},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -920,7 +920,7 @@ func TestCarbon_IsToday(t *testing.T) {
 
 func TestCarbon_IsTomorrow(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    Carbon // 输入值
 		expected bool   // 期望值
@@ -930,7 +930,7 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 		{Yesterday(), false},
 		{Tomorrow(), true},
 	}
-
+	
 	for index, test := range tests {
 		c := test.input
 		assert.Nil(c.Error)
@@ -940,7 +940,7 @@ func TestCarbon_IsTomorrow(t *testing.T) {
 
 func TestCarbon_IsSameCentury(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -950,7 +950,7 @@ func TestCarbon_IsSameCentury(t *testing.T) {
 		{Parse("2020-08-05"), Parse("3020-08-05"), false},
 		{Parse("2020-08-05"), Parse("2099-08-05"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -960,7 +960,7 @@ func TestCarbon_IsSameCentury(t *testing.T) {
 
 func TestCarbon_IsSameDecade(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -971,7 +971,7 @@ func TestCarbon_IsSameDecade(t *testing.T) {
 		{Parse("2020-08-05"), Parse("2021-08-05"), true},
 		{Parse("2020-01-01"), Parse("2120-01-31"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -981,7 +981,7 @@ func TestCarbon_IsSameDecade(t *testing.T) {
 
 func TestCarbon_IsSameYear(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -991,7 +991,7 @@ func TestCarbon_IsSameYear(t *testing.T) {
 		{Parse("2020-08-05"), Parse("2021-08-05"), false},
 		{Parse("2020-01-01"), Parse("2020-12-31"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1001,7 +1001,7 @@ func TestCarbon_IsSameYear(t *testing.T) {
 
 func TestCarbon_IsSameQuarter(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1011,7 +1011,7 @@ func TestCarbon_IsSameQuarter(t *testing.T) {
 		{Parse("2020-08-05"), Parse("2020-01-05"), false},
 		{Parse("2020-01-01"), Parse("2020-01-31"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1021,7 +1021,7 @@ func TestCarbon_IsSameQuarter(t *testing.T) {
 
 func TestCarbon_IsSameMonth(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1031,7 +1031,7 @@ func TestCarbon_IsSameMonth(t *testing.T) {
 		{Parse("2020-08-05"), Parse("2021-08-05"), false},
 		{Parse("2020-01-01"), Parse("2020-01-31"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1041,7 +1041,7 @@ func TestCarbon_IsSameMonth(t *testing.T) {
 
 func TestCarbon_IsSameDay(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1051,7 +1051,7 @@ func TestCarbon_IsSameDay(t *testing.T) {
 		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
 		{Parse("2020-08-05 00:00:00"), Parse("2020-08-05 13:14:15"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1061,7 +1061,7 @@ func TestCarbon_IsSameDay(t *testing.T) {
 
 func TestCarbon_IsSameHour(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1071,7 +1071,7 @@ func TestCarbon_IsSameHour(t *testing.T) {
 		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
 		{Parse("2020-08-05 13:00:00"), Parse("2020-08-05 13:14:15"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1081,7 +1081,7 @@ func TestCarbon_IsSameHour(t *testing.T) {
 
 func TestCarbon_IsSameMinute(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1091,7 +1091,7 @@ func TestCarbon_IsSameMinute(t *testing.T) {
 		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
 		{Parse("2020-08-05 13:14:00"), Parse("2020-08-05 13:14:15"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1101,7 +1101,7 @@ func TestCarbon_IsSameMinute(t *testing.T) {
 
 func TestCarbon_IsSameSecond(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input1   Carbon // 输入值
 		input2   Carbon // 输入值
@@ -1111,7 +1111,7 @@ func TestCarbon_IsSameSecond(t *testing.T) {
 		{Parse("2020-08-05 13:14:15"), Parse("2021-08-05 13:14:15"), false},
 		{Parse("2020-08-05 13:14:15"), Parse("2020-08-05 13:14:15"), true},
 	}
-
+	
 	for index, test := range tests {
 		assert.Nil(test.input1.Error)
 		assert.Nil(test.input2.Error)
@@ -1121,7 +1121,7 @@ func TestCarbon_IsSameSecond(t *testing.T) {
 
 func TestCarbon_Compare(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param1   string // 输入参数1
@@ -1141,7 +1141,7 @@ func TestCarbon_Compare(t *testing.T) {
 		{"2020-08-05", "<>", "2020-08-04", true},
 		{"2020-08-05", "+", "2020-08-04", false},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param2)
 		assert.Nil(c1.Error)
@@ -1152,7 +1152,7 @@ func TestCarbon_Compare(t *testing.T) {
 
 func TestCarbon_Gt(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1162,7 +1162,7 @@ func TestCarbon_Gt(t *testing.T) {
 		{"2020-08-05", "2020-08-04", true},
 		{"2020-08-05", "2020-08-06", false},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1173,7 +1173,7 @@ func TestCarbon_Gt(t *testing.T) {
 
 func TestCarbon_Lt(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1183,7 +1183,7 @@ func TestCarbon_Lt(t *testing.T) {
 		{"2020-08-05", "2020-08-04", false},
 		{"2020-08-05", "2020-08-06", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1194,7 +1194,7 @@ func TestCarbon_Lt(t *testing.T) {
 
 func TestCarbon_Eq(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1204,7 +1204,7 @@ func TestCarbon_Eq(t *testing.T) {
 		{"2020-08-05", "2020-08-04", false},
 		{"2020-08-05", "2020-08-06", false},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1215,7 +1215,7 @@ func TestCarbon_Eq(t *testing.T) {
 
 func TestCarbon_Ne(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1225,7 +1225,7 @@ func TestCarbon_Ne(t *testing.T) {
 		{"2020-08-05", "2020-08-04", true},
 		{"2020-08-05", "2020-08-06", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1236,7 +1236,7 @@ func TestCarbon_Ne(t *testing.T) {
 
 func TestCarbon_Gte(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1246,7 +1246,7 @@ func TestCarbon_Gte(t *testing.T) {
 		{"2020-08-05", "2020-08-04", true},
 		{"2020-08-05", "2020-08-06", false},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1257,7 +1257,7 @@ func TestCarbon_Gte(t *testing.T) {
 
 func TestCarbon_Lte(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param    string // 参数值
@@ -1267,7 +1267,7 @@ func TestCarbon_Lte(t *testing.T) {
 		{"2020-08-05", "2020-08-04", false},
 		{"2020-08-05", "2020-08-06", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2 := Parse(test.input), Parse(test.param)
 		assert.Nil(c1.Error)
@@ -1278,7 +1278,7 @@ func TestCarbon_Lte(t *testing.T) {
 
 func TestCarbon_Between(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param1   string // 输入参数1
@@ -1290,7 +1290,7 @@ func TestCarbon_Between(t *testing.T) {
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", false},
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2, c3 := Parse(test.input), Parse(test.param1), Parse(test.param2)
 		assert.Nil(c1.Error)
@@ -1302,7 +1302,7 @@ func TestCarbon_Between(t *testing.T) {
 
 func TestCarbon_BetweenIncludedStart(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param1   string // 输入参数1
@@ -1314,7 +1314,7 @@ func TestCarbon_BetweenIncludedStart(t *testing.T) {
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", false},
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2, c3 := Parse(test.input), Parse(test.param1), Parse(test.param2)
 		assert.Nil(c1.Error)
@@ -1326,7 +1326,7 @@ func TestCarbon_BetweenIncludedStart(t *testing.T) {
 
 func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param1   string // 输入参数1
@@ -1338,7 +1338,7 @@ func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-05 13:14:15", true},
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2, c3 := Parse(test.input), Parse(test.param1), Parse(test.param2)
 		assert.Nil(c1.Error)
@@ -1350,7 +1350,7 @@ func TestCarbon_BetweenIncludedEnd(t *testing.T) {
 
 func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 	assert := assert.New(t)
-
+	
 	tests := []struct {
 		input    string // 输入值
 		param1   string // 输入参数1
@@ -1363,7 +1363,7 @@ func TestCarbon_BetweenIncludedBoth(t *testing.T) {
 		{"2020-08-05 13:14:15", "2020-08-04 13:14:15", "2020-08-06 13:14:15", true},
 		{"2020-08-05 13:14:15", "2020-08-06 13:14:15", "2020-08-06 13:14:15", false},
 	}
-
+	
 	for index, test := range tests {
 		c1, c2, c3 := Parse(test.input), Parse(test.param1), Parse(test.param2)
 		assert.Nil(c1.Error)

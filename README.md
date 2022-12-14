@@ -26,10 +26,10 @@ it is helpful, please give me a star
 
 ```go
 // By github
-go get -u github.com/golang-module/carbon/v2
+go get -u github.com/gozelle/carbon
 
 import (
-	"github.com/golang-module/carbon/v2"
+	"github.com/gozelle/carbon"
 )
 
 // By gitee

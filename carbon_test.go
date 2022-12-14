@@ -3,8 +3,8 @@ package carbon
 import (
 	"testing"
 	"time"
-
-	"github.com/stretchr/testify/assert"
+	
+	"github.com/gozelle/testify/assert"
 )
 
 func TestCarbon_Time2Carbon(t *testing.T) {
